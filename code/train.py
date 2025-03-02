@@ -68,12 +68,14 @@ model = BaselineCNN(num_classes=len(dataset.classes)).to(device)
 
 # Define loss and optimizer
 criterion = torch.nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+LEARNING_RATE = 0.0011
+optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 if __name__ == "__main__":
     # Training loop
-    epochs = 5
+    epochs = 20
     duration = 0
+    print(f'Total Epochs: {epochs}\nLearning Rate: {LEARNING_RATE}')
     for epoch in range(epochs):
         t1 = time.time()
         running_loss = 0.0
