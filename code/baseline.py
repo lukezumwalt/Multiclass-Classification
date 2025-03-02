@@ -51,27 +51,27 @@ class BaselineCNN(nn.Module):
         excepting the final fully-connected layer.
         '''
         # Convolutional Layers:
-        # x = self.activation(self.conv1(x))
-        # x = self.activation(self.conv2(x))
-        # x = self.activation(self.conv3(x))
-        for c in self.convos:
-            x = self.activation(c(x))
+        x = self.activation(self.conv1(x))
+        x = self.activation(self.conv2(x))
+        x = self.activation(self.conv3(x))
+        # for c in self.convos:
+        #     x = self.activation(c(x))
 
         # Formatting for FC, not learning:
         x = F.adaptive_avg_pool2d(x, (8, 8))  # Ensure feature map fits FC layer
         x = torch.flatten(x, start_dim=1)
 
         # Fully Connected Layers:
-        # x = self.activation(self.fc1(x))
-        # x = self.activation(self.fc2(x))
-        # x = self.fc3(x)  # No activation here; use Softmax in loss function
-        for i, f in self.fcs:
-            if i == len(self.fcs) - 1:
-                # Last FC layer, no activation.
-                # Implement softmax in the loss function.
-                x = f(x)
-            else:
-                x = self.activation(f(x))
+        x = self.activation(self.fc1(x))
+        x = self.activation(self.fc2(x))
+        x = self.fc3(x)  # No activation here; use Softmax in loss function
+        # for i, f in self.fcs:
+        #     if i == len(self.fcs) - 1:
+        #         # Last FC layer, no activation.
+        #         # Implement softmax in the loss function.
+        #         x = f(x)
+        #     else:
+        #         x = self.activation(f(x))
 
         return x
 
