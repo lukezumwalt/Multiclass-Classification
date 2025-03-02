@@ -17,7 +17,7 @@ from PIL import Image
 from baseline import BaselineCNN
 
 # Define dataset path
-DATASET_PATH = "../dataset/train"
+DATASET_PATH = "dataset/train"
 
 # Image preprocessing
 transform = transforms.Compose([
@@ -77,6 +77,7 @@ if __name__ == "__main__":
 
             optimizer.zero_grad()
             outputs = model(images)
+            outputs = torch.nn.functional.softmax(outputs, dim=1)  # Apply Softmax
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
@@ -85,6 +86,6 @@ if __name__ == "__main__":
 
         dt = time.time() - t1   # Duration of epoch
         duration += dt          # Accumulated full duration
-        print(f"+9Epoch {epoch+1}, Loss: {running_loss/len(dataloader)}")
+        print(f"T = {dt:.2f}Epoch {epoch+1}, Loss: {running_loss/len(dataloader)}")
 
     print("Training complete.")
