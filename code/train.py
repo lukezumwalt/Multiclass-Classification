@@ -10,9 +10,9 @@ Lukas Zumwalt
 import os
 import time
 import torch
-import torchvision.transforms as transforms
-import torch.optim as optim
+from torch import optim
 from torch.utils.data import DataLoader, Dataset
+from torchvision import transforms
 from PIL import Image
 from baseline import BaselineCNN
 
@@ -27,6 +27,11 @@ transform = transforms.Compose([
 
 # Custom dataset loader
 class FlowersDataset(Dataset):
+    '''
+    Dedicated, custom dataset class for the flower data selected.
+    Designed to point to the globally-defined paths in this file
+    and in data_sort.py.
+    '''
     def __init__(self, root_dir, transform=None):
         self.root_dir = root_dir
         self.transform = transform
@@ -67,7 +72,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 if __name__ == "__main__":
     # Training loop
-    epochs = 100
+    epochs = 5
     duration = 0
     for epoch in range(epochs):
         t1 = time.time()
@@ -89,6 +94,5 @@ if __name__ == "__main__":
         print(f"Epoch {epoch+1} (T = {dt:.2f}s), Loss: {running_loss/len(dataloader)}")
 
     print("Training complete.")
-    torch.save(model.state_dict(), "flower_model.pth")
-    print("Model saved as flower_model.pth")
-
+    torch.save(model.state_dict(), "bin/flower_model.pth")
+    print("Model saved at: bin/flower_model.pth")
