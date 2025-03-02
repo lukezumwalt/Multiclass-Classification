@@ -67,7 +67,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 if __name__ == "__main__":
     # Training loop
-    epochs = 5
+    epochs = 100
     duration = 0
     for epoch in range(epochs):
         t1 = time.time()
@@ -89,3 +89,6 @@ if __name__ == "__main__":
         print(f"Epoch {epoch+1} (T = {dt:.2f}s), Loss: {running_loss/len(dataloader)}")
 
     print("Training complete.")
+    torch.save(model.state_dict(), "flower_model.pth")
+    print("Model saved as flower_model.pth")
+
