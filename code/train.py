@@ -86,6 +86,6 @@ if __name__ == "__main__":
 
         dt = time.time() - t1   # Duration of epoch
         duration += dt          # Accumulated full duration
-        print(f"T = {dt:.2f}Epoch {epoch+1}, Loss: {running_loss/len(dataloader)}")
+        print(f"Epoch {epoch+1} (T = {dt:.2f}s), Loss: {running_loss/len(dataloader)}")
 
     print("Training complete.")
