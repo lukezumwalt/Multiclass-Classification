@@ -83,8 +83,8 @@ class BaselineCNN(nn.Module):
         # Fully Connected Layers:
         x = self.activation(self.fc1(x))
         x = self.activation(self.fc2(x))
-        x = self.activation(self.fc3(x))
-        # x = self.fc3(x)  # No activation here; use Softmax in loss function
+        # x = self.activation(self.fc3(x))
+        x = self.fc3(x)  # No activation here; use Softmax in loss function
         # for i, f in self.fcs:
         #     if i == len(self.fcs) - 1:
         #         # Last FC layer, no activation.
