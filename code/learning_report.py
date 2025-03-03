@@ -12,14 +12,13 @@ import os
 import time
 import random
 import matplotlib.pyplot as plt
-import numpy as np
 import torch
 from torch import optim
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
 from tqdm import tqdm
 from PIL import Image
-from baseline import BaselineCNN
+from experiment1 import Experiment1CNN
 
 # Define dataset paths
 TRAIN_DATASET_PATH = "dataset/train"
@@ -89,7 +88,7 @@ if __name__ == "__main__":
 
         # Initialize model
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        model = BaselineCNN(num_classes=len(train_dataset.classes)).to(device)
+        model = Experiment1CNN(num_classes=len(train_dataset.classes)).to(device)
 
         # Define loss and optimizer
         criterion = torch.nn.CrossEntropyLoss()

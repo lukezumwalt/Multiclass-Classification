@@ -20,9 +20,7 @@ import random
 
 # Define the paths
 BASE_DIR = 'dataset/archive/flowers'  # Root directory containing subfolders of images
-# TRAIN_DIR = os.path.join(BASE_DIR, 'train')
 TRAIN_DIR = 'dataset/train'
-# TEST_DIR = os.path.join(BASE_DIR, 'test')
 TEST_DIR = 'dataset/test'
 
 # Ensure train and test directories exist
