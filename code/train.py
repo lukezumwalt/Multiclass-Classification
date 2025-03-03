@@ -60,7 +60,7 @@ class FlowersDataset(Dataset):
 
 # Load dataset
 dataset = FlowersDataset(DATASET_PATH, txform=TRANSFORM)
-dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+dataloader = DataLoader(dataset, batch_size=16, shuffle=True)
 
 # Initialize model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -68,12 +68,12 @@ model = BaselineCNN(num_classes=len(dataset.classes)).to(device)
 
 # Define loss and optimizer
 criterion = torch.nn.CrossEntropyLoss()
-LEARNING_RATE = 0.0011
-optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+LEARNING_RATE = 0.01
+optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE)
 
 if __name__ == "__main__":
     # Training loop
-    epochs = 30
+    epochs = 20
     duration = 0
     print(f'Total Epochs: {epochs}\nLearning Rate: {LEARNING_RATE}')
     t0 = time.time()
@@ -85,7 +85,6 @@ if __name__ == "__main__":
 
             optimizer.zero_grad()
             outputs = model(images)
-            outputs = torch.nn.functional.softmax(outputs, dim=1)  # Apply Softmax
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
