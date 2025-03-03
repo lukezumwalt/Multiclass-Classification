@@ -20,7 +20,7 @@ from baseline import BaselineCNN
 DATASET_PATH = "dataset/train"
 
 # Image preprocessing
-transform = transforms.Compose([
+TRANSFORM = transforms.Compose([
     transforms.Resize((64, 64)),
     transforms.ToTensor()
 ])
@@ -32,9 +32,9 @@ class FlowersDataset(Dataset):
     Designed to point to the globally-defined paths in this file
     and in data_sort.py.
     '''
-    def __init__(self, root_dir, transform=None):
+    def __init__(self, root_dir, txform=None):
         self.root_dir = root_dir
-        self.transform = transform
+        self.txform = txform
         self.image_paths = []
         self.labels = []
         self.classes = sorted(os.listdir(root_dir))
@@ -53,13 +53,13 @@ class FlowersDataset(Dataset):
         label = self.labels[idx]
         image = Image.open(img_path).convert("RGB")
 
-        if self.transform:
-            image = self.transform(image)
+        if self.txform:
+            image = self.txform(image)
 
         return image, label
 
 # Load dataset
-dataset = FlowersDataset(DATASET_PATH, transform=transform)
+dataset = FlowersDataset(DATASET_PATH, txform=TRANSFORM)
 dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 # Initialize model
@@ -73,9 +73,10 @@ optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 if __name__ == "__main__":
     # Training loop
-    epochs = 20
+    epochs = 30
     duration = 0
     print(f'Total Epochs: {epochs}\nLearning Rate: {LEARNING_RATE}')
+    t0 = time.time()
     for epoch in range(epochs):
         t1 = time.time()
         running_loss = 0.0
@@ -95,6 +96,6 @@ if __name__ == "__main__":
         duration += dt          # Accumulated full duration
         print(f"Epoch {epoch+1} (T = {dt:.2f}s), Loss: {running_loss/len(dataloader)}")
 
-    print("Training complete.")
+    print(f"Training complete. Took {time.time()-t0:.2f}s")
     torch.save(model.state_dict(), "bin/flower_model.pth")
     print("Model saved at: bin/flower_model.pth")
