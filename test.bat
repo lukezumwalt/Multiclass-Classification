@@ -2,5 +2,5 @@
 echo Testing Model...
 python code/test.py
 
-echo Done!
+echo Done testing!
 pause

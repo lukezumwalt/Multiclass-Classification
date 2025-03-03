@@ -1,4 +1,7 @@
 @echo off
+echo Sorting data...
+python code/data_sort.py
+
 echo Declaring Model...
 python code/baseline.py
 
